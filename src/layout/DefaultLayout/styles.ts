@@ -41,6 +41,77 @@ export const DefaultLayoutContainer = styled.div`
                     justify-content: space-between;
 
                     margin-bottom: 0.8rem;
+
+                    > h1 {
+                        font-size: 2.4rem;
+                        line-height: 130%;
+                    }
+
+                    > a {
+                        position: relative;
+                        
+                        display: flex;
+                        align-items: center;
+                        gap: 0.8rem;
+
+                        font-size: 1.2rem;
+                        font-weight: bold;
+
+                        text-decoration: none;
+                        color: ${props => props.theme.blue};
+                    }
+
+                    > a::after {
+                        content: '';
+                        position: absolute;
+                        left: 0;
+                        bottom: 0;
+                        width: 0%;
+                        height: 0.1rem;
+                        background: ${props => props.theme.blue};
+                    }
+
+                    > a:hover::after {
+                        width: 100%;
+                    }
+                }
+
+                > p {
+                    width: 61.2rem;
+                    
+                    display: -webkit-box;
+                    -webkit-line-clamp: 2;
+                    -webkit-box-orient: vertical;
+
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+
+                    color: ${props => props.theme.gray_400};
+                }
+
+                > footer {
+                    display: flex;
+                    align-items: center;
+                    gap: 2.4rem;
+                    
+                    margin-top: 2.4rem;
+
+                    > .footerContent {
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        gap: 0.8rem;
+
+                        > svg {
+                            width: 1.8rem;
+                            height: 1.8rem;
+                            color: ${props => props.theme.dark_gray_300};
+                        }
+
+                        > p {
+                            color: ${props => props.theme.gray_400};
+                        }
+                    }
                 }
             }
         }
