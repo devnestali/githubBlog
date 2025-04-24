@@ -53,7 +53,7 @@ export const UserInformation = styled.div`
     }
 `;
 
-export const Title = styled.div`
+export const HeaderTitle = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;

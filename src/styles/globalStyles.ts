@@ -20,6 +20,19 @@ export const GlobalStyles = createGlobalStyle`
         background: ${props => props.theme.dark_gray_900};
         color: ${props => props.theme.gray_100};
         -webkit-font-smoothing: antialiased;
+
+        &::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        &::-webkit-scrollbar-track {
+            background: transparent;
+            border-radius: 10px;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background: ${props => props.theme.dark_gray_700};
+        }
     }
 
     body, input {
