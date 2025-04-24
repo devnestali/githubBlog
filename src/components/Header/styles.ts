@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
 export const HeaderContainer = styled.header`
-    min-width: 86.4rem;
-
+    width: 100%;
+    
     display: flex;
     justify-content: center;
 
