@@ -1,15 +1,19 @@
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 
-export const PostContainer = styled.main`
+export const PostContainer = styled.div`
     min-width: 86.4rem;
     
     display: flex;
     flex-direction: column;
-    gap: 7.2rem;
+    gap: 2.5rem;
 
     padding: 0 32.5rem;
     margin-top: -10rem;
+
+    &:last-child {
+        margin-bottom: 3rem;
+    }
 `;
 
 export const PostInfo = styled.div`
@@ -22,6 +26,8 @@ export const PostInfo = styled.div`
     padding: 3.2rem;
     border-radius: 10px;
     box-shadow: 0px 2px 26px rgba(0, 0, 0, 0.2);
+
+    margin-bottom: 4rem;
 
     h1 {
         font-size: 2.4rem;
