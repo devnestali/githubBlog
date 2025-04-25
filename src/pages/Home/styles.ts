@@ -19,6 +19,8 @@ export const RepositoriesContainer = styled.div`
 
     overflow-y: auto;
     padding: 0.3rem;
+
+    margin-bottom: 3rem;
     
     &::-webkit-scrollbar {
         width: 4px;
