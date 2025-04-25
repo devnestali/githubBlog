@@ -64,34 +64,6 @@ export const HeaderTitle = styled.div`
         font-size: 2.4rem;
         line-height: 130%;
     }
-
-    > a {
-        position: relative;
-        
-        display: flex;
-        align-items: center;
-        gap: 0.8rem;
-
-        font-size: 1.2rem;
-        font-weight: bold;
-
-        text-decoration: none;
-        color: ${props => props.theme.blue};
-    }
-
-    > a::after {
-        content: '';
-        position: absolute;
-        left: 0;
-        bottom: 0;
-        width: 0%;
-        height: 0.1rem;
-        background: ${props => props.theme.blue};
-    }
-
-    > a:hover::after {
-        width: 100%;
-    }
 `;
 
 export const FooterContent = styled.div`
