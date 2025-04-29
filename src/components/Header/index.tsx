@@ -3,33 +3,69 @@ import { FooterContent, HeaderContainer, HeaderContent, HeaderTitle, UserInforma
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import { faBuilding, faUserGroup } from '@fortawesome/free-solid-svg-icons';
+
 import { GitHubLink } from '../GitHubLink';
 
+import { useEffect, useState } from 'react';
+import { api } from '../../lib/axios';
+
+interface UserProps {
+    name: string;
+    avatar_url: string;
+    bio: string;
+    login: string;
+    company: string;
+    followers: number;
+}
+
 export function Header() {
+    const [user, setUser] = useState<UserProps>()
+    
+    useEffect(() => {
+        async function fetchGithubProfileData() {
+            const usernameLogin = 'devnestali';
+            
+            const response = await api.get(`users/${usernameLogin}`);
+            const { name, avatar_url, bio, login, followers, company } = response.data;
+
+            const userData = {
+                name,
+                avatar_url,
+                bio,
+                login,
+                followers,
+                company
+            }
+
+            setUser(userData);
+        }
+
+        fetchGithubProfileData();
+    }, [])
     return (
         <HeaderContainer>
             <HeaderContent>
-                <img src="https://randomuser.me/api/portraits/men/47.jpg" />
+                <img src={user?.avatar_url} />
                 <UserInformation>
                     <HeaderTitle>
-                        <h1>John Doe</h1>
+                        <h1>{user?.name}</h1>
                         <GitHubLink title='GITHUB'/>                               
                     </HeaderTitle>
                     <p>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui deleniti in eius quibusdam. Quia, ut non asperiores obcaecati inventore autem quas eos omnis, quam maxime deserunt impedit maiores eaque.
+                        {user?.bio}
                     </p>
                     <footer>
                         <FooterContent>
                             <FontAwesomeIcon icon={faGithub} />
-                            <p>devnestali</p>
+                            <p>{user?.login}</p>
                         </FooterContent>
                         <FooterContent>
                             <FontAwesomeIcon icon={faBuilding}/>
-                            <p>Rocketseat</p>
+                            <p>{user?.company}</p>
                         </FooterContent>
                         <FooterContent>
                             <FontAwesomeIcon icon={faUserGroup}/>
-                            <p>32 seguidores</p>
+                            <p>{user?.followers} seguidores</p>
                         </FooterContent>
                     </footer>
                 </UserInformation>
