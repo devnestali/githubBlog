@@ -66,7 +66,7 @@ export const RepositoryTitle = styled.header`
     }
 
     time {
-        max-width: 7rem;
+        max-width: 12rem;
 
         white-space: nowrap;
         overflow: hidden;
