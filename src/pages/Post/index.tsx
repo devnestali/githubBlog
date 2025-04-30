@@ -1,22 +1,28 @@
 import { PostContainer } from './styles';
 import { MarkdownRenderer } from "../../lib/MarkdownRenderer";
 import { PostInfo } from './components/PostInfo';
+import { useEffect, useState } from 'react';
+import { api } from '../../lib/axios';
+import { useParams } from 'react-router-dom';
+import { Base64 } from 'js-base64';
 
 export function Post() {    
-    const markdownContent = `
-**Programming languages all have built-in data structures, but these often differ from one language to another.** This article attempts to list the built-in data structures available in JavaScript and what properties they have. These can be used to build other data structures. Wherever possible, comparisons with other languages are drawn.
-
-## Dynamic typing
-
-JavaScript is a loosely typed and dynamic language. Variables in JavaScript are not directly associated with any particular value type, and any variable can be assigned (and re-assigned) values of all types:
-
-~~~js
-let foo = 42;   // foo is now a number
-foo = 'bar';    // foo is now a string
-foo = true;     // foo is now a boolean
-~~~
-`
+    const [repoReadme, setRepoReadme] = useState<string | undefined>();
+    const { repositoryName } = useParams<string>();
     
+    const markdownContent = `${repoReadme}`
+    useEffect(() => {
+        async function fetchRepoReadmeData() {
+            const response = await api.get(`/repos/devnestali/${repositoryName}/readme`);
+
+            const { content } = response.data;
+            const readmeDecoded = Base64.decode(content);
+
+            setRepoReadme(readmeDecoded);
+        }
+
+        fetchRepoReadmeData();
+    }, [repositoryName])
     return (
         <PostContainer>
             <PostInfo />
