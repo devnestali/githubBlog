@@ -21,6 +21,8 @@ export function PostInfo() {
     const [currentRepository, setCurrentRepository] = useState<currentRepositoryProps>();
     const { repositoryName } = useParams();
 
+    const githubUrl = `https://github.com/devnestali/${repositoryName}`
+
 
     useEffect(() => {
         async function fetchCurrentlyRepoData() {
@@ -49,7 +51,7 @@ export function PostInfo() {
                     VOLTAR
                 </PostInfoBackLink>
 
-                <GitHubLink title="VER NO GITHUB"/>
+                <GitHubLink title="VER NO GITHUB" url={githubUrl}/>
             </PostInfoTitle>
             <h1>{currentRepository?.name}</h1>
             <footer>

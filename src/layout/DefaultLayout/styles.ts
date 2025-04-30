@@ -6,7 +6,7 @@ export const DefaultLayoutContainer = styled.div`
     
     > img {
         width: 100%;
-        height: calc(100vh - 50rem);
+        height: 40%;
         object-fit: cover;
     }
 `;

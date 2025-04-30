@@ -6,8 +6,4 @@ export const PostContainer = styled.div`
     gap: 2.5rem;
 
     margin-top: -10rem;
-
-    &:last-child {
-        margin-bottom: 3rem;
-    }
 `;

@@ -47,7 +47,7 @@ export function Header() {
                 <UserInformation>
                     <HeaderTitle>
                         <h1>{user?.name}</h1>
-                        <GitHubLink title='GITHUB'/>                               
+                        <GitHubLink title='GITHUB' url='https://github.com/devnestali'/>                               
                     </HeaderTitle>
                     <p>
                         {user?.bio}
