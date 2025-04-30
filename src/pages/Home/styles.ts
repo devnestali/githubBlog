@@ -1,13 +1,12 @@
 import styled from "styled-components";
 
 export const HomeContainer = styled.main`
-    min-width: 86.4rem;
+    width: 100%;
     
     display: flex;
     flex-direction: column;
+    justify-content: center;
     gap: 7.2rem;
-
-    padding: 0 32.5rem;
 `;
 
 export const RepositoriesContainer = styled.div`
