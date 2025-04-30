@@ -1,11 +1,15 @@
+import { useContext } from "react";
 import { SearchContainer, SearchForm, SearchHeader } from "./styles";
+import { RepositoryContext } from "../../../../context/RepoContext";
 
 export function Search() {
+    const { repositories } = useContext(RepositoryContext);
+    
     return (
         <SearchContainer>
             <SearchHeader>
                 <h4>Publicaciones</h4>
-                <span>6 publicaciones</span>
+                <span>{repositories.length} publicaciones</span>
             </SearchHeader>
 
             <SearchForm>

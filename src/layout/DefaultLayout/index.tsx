@@ -1,5 +1,5 @@
 import { Outlet } from "react-router-dom";
-import { DefaultLayoutContainer } from "./styles";
+import { AppContent, DefaultLayoutContainer } from "./styles";
 import backgroundCover from "../../assets/Cover.png";
 
 export function DefaultLayout() {
@@ -7,7 +7,9 @@ export function DefaultLayout() {
         <DefaultLayoutContainer>
             <img src={backgroundCover} />
 
-            <Outlet />
+            <AppContent>
+                <Outlet />
+            </AppContent>
         </DefaultLayoutContainer>
     )
 }

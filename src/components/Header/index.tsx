@@ -23,9 +23,7 @@ export function Header() {
     
     useEffect(() => {
         async function fetchGithubProfileData() {
-            const usernameLogin = 'devnestali';
-            
-            const response = await api.get(`users/${usernameLogin}`);
+            const response = await api.get('users/devnestali');
             const { name, avatar_url, bio, login, followers, company } = response.data;
 
             const userData = {
