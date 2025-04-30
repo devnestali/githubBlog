@@ -26,7 +26,7 @@ export function RepositoriesProvider({ children }: RepositoriesProviderProps) {
         
     useEffect(() => {
         async function fetchRepoProfileData() {
-            const response = await api.get('/users/devnestali/repos?per_page=100');
+            const response = await api.get('users/devnestali/repos?per_page=100');
 
             
             const filteredRepos: RepositoryProps[] = response.data.map((repo: any) => {
@@ -45,7 +45,7 @@ export function RepositoriesProvider({ children }: RepositoriesProviderProps) {
         }
 
         fetchRepoProfileData();
-    }, [repositories])
+    }, [])
 
 
     return (
