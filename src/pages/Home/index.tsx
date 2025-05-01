@@ -10,7 +10,7 @@ export function Home() {
     const { repositories } = useContext(RepositoryContext)
     const navigate = useNavigate();
     
-    function handleRepoNavigation(repositoryName: string) {
+    function handleRepoNavigation(repositoryName?: string) {
         navigate(`/repository/${repositoryName}`)
     }
     
