@@ -4,6 +4,8 @@ import { api } from "../lib/axios";
 import { formatDistanceToNow, parseISO } from 'date-fns';
 import { es } from 'date-fns/locale';
 
+import { Base64 } from'js-base64';
+
 interface RepositoryProps {
     id: number;
     name: string;
@@ -13,6 +15,7 @@ interface RepositoryProps {
 
 interface RepositoryContextType {
     repositories: RepositoryProps[];
+    fetchRepoReadmeData: (repositoryName: string | undefined) => Promise<string>;
 }
 
 interface RepositoriesProviderProps {
@@ -24,6 +27,15 @@ export const RepositoryContext = createContext({} as RepositoryContextType);
 export function RepositoriesProvider({ children }: RepositoriesProviderProps) {
     const [repositories, setRepositories] = useState<RepositoryProps[]>([]);
         
+    async function fetchRepoReadmeData(repositoryName: string | undefined) {
+        const response = await api.get(`/repos/devnestali/${repositoryName}/readme`);
+
+        const { content } = response.data;
+        const readmeDecoded = Base64.decode(content);
+
+        return readmeDecoded;
+    }
+    
     useEffect(() => {
         async function fetchRepoProfileData() {
             const response = await api.get('users/devnestali/repos?per_page=100');
@@ -50,7 +62,8 @@ export function RepositoriesProvider({ children }: RepositoriesProviderProps) {
 
     return (
         <RepositoryContext.Provider value={{
-            repositories
+            repositories,
+            fetchRepoReadmeData
         }}>
             {children}
         </RepositoryContext.Provider>
