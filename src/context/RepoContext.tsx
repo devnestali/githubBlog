@@ -6,6 +6,15 @@ import { es } from 'date-fns/locale';
 
 import { Base64 } from'js-base64';
 
+interface UserProps {
+    name: string;
+    avatar_url: string;
+    bio: string;
+    login: string;
+    company: string;
+    followers: number;
+}
+
 interface RepositoryProps {
     id: number;
     name: string;
@@ -21,8 +30,10 @@ interface CurrentRepoProps {
 }
 
 interface RepositoryContextType {
+    user: UserProps;
     repositories: RepositoryProps[];
     currentRepository: CurrentRepoProps;
+    searchRepositories: (query?: string) => void;
     fetchRepoReadmeData: (repositoryName?: string) => Promise<string>;
     fetchCurrentlyRepoData: (repositoryName?: string) => void;
 }
@@ -34,14 +45,35 @@ interface RepositoriesProviderProps {
 export const RepositoryContext = createContext({} as RepositoryContextType);
 
 export function RepositoriesProvider({ children }: RepositoriesProviderProps) {
+    const [user, setUser] = useState<UserProps>({} as UserProps);
     const [repositories, setRepositories] = useState<RepositoryProps[]>([]);
-    const [currentRepository, setCurrentRepository] = useState<CurrentRepoProps>({
-        name: '',
-        login: '',
-        updated_at: '',
-        stargazers_count: 0
-    })
+    const [currentRepository, setCurrentRepository] = useState<CurrentRepoProps>({} as CurrentRepoProps)
+    
+    const searchRepositories = useCallback(
+        async (query?: string) => { 
+            const { data } = await api.get('/search/repositories', {
+                params: {
+                    q: `${query} user:devnestali`,
+                    per_page: 50
+                }
+            })
 
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            const filteredRepos: RepositoryProps[] = data.items.map((repo: any) => {
+                const updatedAtToDate = parseISO(repo.updated_at);
+                const formattedUpdatedAt = formatDistanceToNow(updatedAtToDate, { locale: es })
+        
+                return {
+                    id: repo.id,
+                    name: repo.name,
+                    description: repo.description,
+                    updated_at: formattedUpdatedAt
+                }
+            });    
+            
+            setRepositories(filteredRepos);
+    }, [])
+    
     const fetchCurrentlyRepoData = useCallback(
         async (repositoryName?: string) => {
             const response = await api.get(`repos/devnestali/${repositoryName}`);
@@ -66,36 +98,63 @@ export function RepositoriesProvider({ children }: RepositoriesProviderProps) {
             const readmeDecoded = Base64.decode(content);
 
             return readmeDecoded
-        }, []);
-    
+    }, []);
+
     useEffect(() => {
-        async function fetchRepoProfileData() {
-            const response = await api.get('users/devnestali/repos?per_page=50');
-            
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            const filteredRepos: RepositoryProps[] = response.data.map((repo: any) => {
-            const updatedAtToDate = parseISO(repo.updated_at);
-            const formattedUpdatedAt = formatDistanceToNow(updatedAtToDate, { locale: es })
+        async function fetchGithubProfileData() {
+            const response = await api.get('users/devnestali');
+            const { name, avatar_url, bio, login, followers, company } = response.data;
 
-            return {
-                id: repo.id,
-                name: repo.name,
-                description: repo.description,
-                updated_at: formattedUpdatedAt
+            const userData: UserProps = {
+                name,
+                avatar_url,
+                bio,
+                login,
+                followers,
+                company
             }
-        });
 
-            setRepositories(filteredRepos);
+            setUser(userData);
         }
 
-        fetchRepoProfileData();
+        async function fetchGithubRepositories() {
+            const response = await api.get('/users/devnestali/repos', {
+                params: {
+                    per_page: 50
+                }
+            })
+
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            const repositoriesData: RepositoryProps[] = response.data.map((repo: any) => {
+                const updatedAtToDate = parseISO(repo.updated_at);
+                const formattedUpdatedAt = formatDistanceToNow(updatedAtToDate, { locale: es })
+        
+                return {
+                    id: repo.id,
+                    name: repo.name,
+                    description: repo.description,
+                    updated_at: formattedUpdatedAt
+                }
+            });
+
+            setRepositories(repositoriesData);
+        }
+
+        fetchGithubProfileData();
+        fetchGithubRepositories();
     }, [])
 
+    
+    useEffect(() => {        
+        searchRepositories();
+    }, [searchRepositories])
 
     return (
         <RepositoryContext.Provider value={{
+            user,
             repositories,
             currentRepository,
+            searchRepositories,
             fetchRepoReadmeData,
             fetchCurrentlyRepoData
         }}>

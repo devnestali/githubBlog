@@ -26,10 +26,10 @@ export function PostInfo() {
             <PostInfoTitle>
                 <PostInfoBackLink to="/">
                     <FontAwesomeIcon icon={faChevronLeft}/>
-                    VOLTAR
+                    VOLVER
                 </PostInfoBackLink>
 
-                <GitHubLink title="VER NO GITHUB" url={githubUrl}/>
+                <GitHubLink title="VER EN GITHUB" url={githubUrl}/>
             </PostInfoTitle>
             <h1>{currentRepository?.name}</h1>
             <footer>

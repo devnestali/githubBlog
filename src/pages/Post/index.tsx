@@ -10,7 +10,14 @@ export function Post() {
     const { fetchRepoReadmeData } = useContext(RepositoryContext);
     const { repositoryName } = useParams();
     
-    const markdownContent = `${repoReadme}`
+    const markdownDefault = `
+# 📭 Este repositorio no tiene un README
+
+Parece que este proyecto aún no cuenta con una descripción.
+Si quieres saber más sobre el proyecto, puedes revisar el historial de commits.  
+`;
+
+    const markdownContent = `${repoReadme ?? markdownDefault}`
     
     useEffect(() => {
         async function loadReadme() {
@@ -18,7 +25,7 @@ export function Post() {
                 const readmeContent = await fetchRepoReadmeData(repositoryName);
                 setRepoReadme(readmeContent);
             } catch (error) {
-                console.log('Error al cargar el README:', error);
+                console.error('Error al cargar el README:', error);
             }
         }
 

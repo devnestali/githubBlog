@@ -5,41 +5,12 @@ import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import { faBuilding, faUserGroup } from '@fortawesome/free-solid-svg-icons';
 
 import { GitHubLink } from '../GitHubLink';
-
-import { useEffect, useState } from 'react';
-import { api } from '../../lib/axios';
-
-interface UserProps {
-    name: string;
-    avatar_url: string;
-    bio: string;
-    login: string;
-    company: string;
-    followers: number;
-}
+import { useContext } from 'react';
+import { RepositoryContext } from '../../context/RepoContext';
 
 export function Header() {
-    const [user, setUser] = useState<UserProps>()
+    const { user } = useContext(RepositoryContext);
     
-    useEffect(() => {
-        async function fetchGithubProfileData() {
-            const response = await api.get('users/devnestali');
-            const { name, avatar_url, bio, login, followers, company } = response.data;
-
-            const userData = {
-                name,
-                avatar_url,
-                bio,
-                login,
-                followers,
-                company
-            }
-
-            setUser(userData);
-        }
-
-        fetchGithubProfileData();
-    }, [])
     return (
         <HeaderContainer>
             <HeaderContent>
