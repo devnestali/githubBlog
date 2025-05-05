@@ -13,4 +13,8 @@ export const DefaultLayoutContainer = styled.div`
 export const AppContent = styled.div`
     max-width: 90rem;
     margin: 0 auto;
+
+    @media (max-width: 768px) {
+        padding: 0 1.2rem;
+    }
 `;

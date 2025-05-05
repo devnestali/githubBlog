@@ -33,6 +33,10 @@ export const RepositoriesContainer = styled.div`
         background: ${props => props.theme.dark_gray_700};
         border-radius: 12px;
     }
+
+    @media (max-width: 768px) {
+        grid-template-columns: 1fr;
+    }
 `;
 
 export const RepositoryContent = styled.article`

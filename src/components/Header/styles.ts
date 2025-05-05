@@ -21,6 +21,11 @@ export const HeaderContent = styled.div`
         height: 14.8rem;
         border-radius: 8px;
     }
+
+    @media (max-width: 768px) {
+        flex-direction: column;
+        justify-content: center;
+    }
 `;
 
 export const UserInformation = styled.div`
@@ -47,6 +52,19 @@ export const UserInformation = styled.div`
         
         margin-top: 2.4rem;
     }
+
+    @media (max-width: 768px) {
+        align-items: center;
+        text-align: center;
+
+        > p {
+            width: 100%;
+        }
+
+        > footer {
+            gap: 2rem;
+        }
+    }
 `;
 
 export const HeaderTitle = styled.div`
@@ -59,6 +77,11 @@ export const HeaderTitle = styled.div`
     > h1 {
         font-size: 2.4rem;
         line-height: 130%;
+    }
+
+    @media (max-width: 768px) {
+        flex-direction: column;
+        gap: 2rem;
     }
 `;
 
