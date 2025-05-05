@@ -6,13 +6,19 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft, faCalendarDay, faStar } from "@fortawesome/free-solid-svg-icons";
 import { faGithub } from "@fortawesome/free-brands-svg-icons";
 
-import { useContext, useEffect } from "react";
+import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { dateFormatter } from "../../../../utils/dateFormatter";
 import { RepositoryContext } from "../../../../context/RepoContext";
+import { useContextSelector } from "use-context-selector";
 
 export function PostInfo() {
-    const { fetchCurrentlyRepoData, currentRepository } = useContext(RepositoryContext)
+    const { fetchCurrentlyRepoData, currentRepository } = useContextSelector(RepositoryContext, (context) => {
+        return {
+            fetchCurrentlyRepoData: context.fetchCurrentlyRepoData,
+            currentRepository: context.currentRepository
+        }
+    })
     const { repositoryName } = useParams();
 
     const githubUrl = `https://github.com/devnestali/${repositoryName}`

@@ -1,9 +1,10 @@
-import { useContext, useEffect } from "react";
+import { useEffect } from "react";
 import { SearchContainer, SearchForm, SearchHeader } from "./styles";
 import { RepositoryContext } from "../../../../context/RepoContext";
 import { useForm } from "react-hook-form";
 import z from 'zod';
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useContextSelector } from "use-context-selector";
 
 const searchFormSchema = z.object({
     query: z.string()
@@ -13,7 +14,12 @@ type SearchFormInput = z.infer<typeof searchFormSchema>
 
 
 export function Search() {
-    const { repositories, searchRepositories } = useContext(RepositoryContext);
+    const { repositories, searchRepositories } = useContextSelector(RepositoryContext, (context) => {
+        return {
+            repositories: context.repositories,
+            searchRepositories: context.searchRepositories
+        }
+    });
     
     const { 
         watch, 

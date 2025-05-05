@@ -5,11 +5,13 @@ import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import { faBuilding, faUserGroup } from '@fortawesome/free-solid-svg-icons';
 
 import { GitHubLink } from '../GitHubLink';
-import { useContext } from 'react';
 import { RepositoryContext } from '../../context/RepoContext';
+import { useContextSelector } from 'use-context-selector';
 
 export function Header() {
-    const { user } = useContext(RepositoryContext);
+    const user = useContextSelector(RepositoryContext, (context) => {
+        return context.user
+    });
     
     return (
         <HeaderContainer>

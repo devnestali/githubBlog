@@ -1,13 +1,17 @@
 import { PostContainer } from './styles';
 import { MarkdownRenderer } from "../../lib/MarkdownRenderer";
 import { PostInfo } from './components/PostInfo';
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { RepositoryContext } from '../../context/RepoContext';
+import { useContextSelector } from 'use-context-selector';
 
 export function Post() {    
     const [repoReadme, setRepoReadme] = useState<string>();
-    const { fetchRepoReadmeData } = useContext(RepositoryContext);
+    const fetchRepoReadmeData = useContextSelector(RepositoryContext, (context) => {
+        return context.fetchRepoReadmeData
+    });
+    
     const { repositoryName } = useParams();
     
     const markdownDefault = `

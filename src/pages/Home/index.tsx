@@ -1,13 +1,16 @@
-import { useContext } from "react"
 import { Header } from "../../components/Header"
 import { Search } from "./components/Search"
 import { HomeContainer, RepositoriesContainer, RepositoryContent, RepositoryTitle, Description } from "./styles"
 import { RepositoryContext } from "../../context/RepoContext"
 import { useNavigate } from "react-router-dom"
 import { WithoutRepo } from "./components/WithoutRepo"
+import { useContextSelector } from "use-context-selector"
 
 export function Home() {
-    const { repositories } = useContext(RepositoryContext)
+    const repositories = useContextSelector(RepositoryContext, (context) => {
+        return context.repositories
+    });
+    
     const navigate = useNavigate();
     
     function handleRepoNavigation(repositoryName?: string) {
